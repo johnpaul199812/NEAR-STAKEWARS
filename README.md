@@ -150,25 +150,40 @@ nano validator_key.json
 "secret_key":"ed25519:55Xbx9zd7pbjDjmmWhMav7ozmreJWyYyiKBVFboG8UjCegUQkxH8bwQkeEuJHxD"
 }
 
-#then exit with CTRL+O press Enter, then CRTL+X press enter
+#then exit with CTRL+O press Enter, then CRTL+X press 
 
 #Create a service file 
 
-sudo tee /etc/systemd/system/neard.service > /dev/null <<EOF 
+sudo tee /etc/systemd/system/neard.service > /dev/null <<EOF
+                                                             
 [Unit] 
+                                                             
 Description=NEARd Daemon Service 
+                                                             
 [Service] 
+                                                             
 Type=simple 
+                                                             
 User=$USER #Group=near 
+                                                             
 WorkingDirectory=$HOME/.near 
+                                                             
 ExecStart=$HOME/nearcore/target/release/neard run 
+                                                             
 Restart=on-failure 
+                                                             
 RestartSec=30 
+                                                             
 KillSignal=SIGINT 
+                                                             
 TimeoutStopSec=45 
+                                                             
 KillMode=mixed 
+                                                             
 [Install] 
+                                                             
 WantedBy=multi-user.target 
+                                                             
 EOF
 
 #start the service and see logs
@@ -239,10 +254,16 @@ sudo apt install curl jq
 #Create a cron task on the machine running node validator that allows ping to network automatically
   
 nano ping.sh
+  
 export NEAR_ENV=shardnet
+  
 near call johnpaulnodes.factory.shardnet.near ping '{}' --accountId johnpaulnodes.shardnet.near --gas=300000000000000
+  
 exit nano
+  
 chmod +x ping.sh
+ 
+  #press CRTL+o press enter, then CRTL+x
 
 #NOTE: replace johnpaulnodes.factory.shardnet.near and johnpaulnodes.shardnet.near with yours
   
