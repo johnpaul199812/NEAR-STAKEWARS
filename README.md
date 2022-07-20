@@ -265,3 +265,8 @@ crontab -e
 #check crontab to see if it is running
   
 crontab -l
+  
+  #check wallet on web to see recent activity in interval of 5 minutes
+  
+  ![image](https://user-images.githubusercontent.com/42779023/180101376-d95dfe0d-9c86-445d-8580-ff39056d9a4e.png)
+
