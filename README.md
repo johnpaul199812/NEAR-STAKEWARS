@@ -253,26 +253,15 @@ sudo apt install curl jq
 
 #Create a cron task on the machine running node validator that allows ping to network automatically
   
-nano ping.sh
-  
-export NEAR_ENV=shardnet
-  
-near call johnpaulnodes.factory.shardnet.near ping '{}' --accountId johnpaulnodes.shardnet.near --gas=300000000000000
-  
-exit nano
-  
-chmod +x ping.sh
- 
-  #press CRTL+o press enter, then CRTL+x
-
-#NOTE: replace johnpaulnodes.factory.shardnet.near and johnpaulnodes.shardnet.near with yours
   
 #Create a new crontab, running every 5 minutes
   
 crontab -e 
   
-*/5 * * * *  $HOME/ping.sh >> $HOME/ping.log
+*/5 * * * *  export NEAR_ENV=shardnet && near call johnpaulnodes.factory.shardnet.near ping '{}' --accountId johnpaulnodes.shardnet.near --gas=300000000000000
 
+  #NOTE: replace johnpaulnodes.factory.shardnet.near and johnpaulnodes.shardnet.near with yours
+  
 #check crontab to see if it is running
   
 crontab -l
