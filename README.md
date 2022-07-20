@@ -13,11 +13,15 @@ or you can use mobaxterm to ssh login, download mobaxterm here https://mobaxterm
 #Challenge 001#
 
 #make sure the linux machine is up-to-date
+
 sudo apt update && sudo apt upgrade -y
 
 #install Node JS and NPM
+
 curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash - 
+
 sudo apt install build-essential nodejs 
+
 PATH="$PATH"
 
 #install NEAR-CLI
