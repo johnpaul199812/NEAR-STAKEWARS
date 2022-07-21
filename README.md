@@ -66,45 +66,54 @@ export PATH="$USER_BASE_BIN:$PATH"
 
 #Install Building env
 
+```
 sudo apt install clang build-essential make
+```
 
 #Install cargo and rust
 
+```
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-
 source $HOME/.cargo/env
+```
 
 #Now download and build binary
 
+```
 git clone https://github.com/near/nearcore 
-
 cd nearcore 
-
 git fetch 
-
 git checkout 0f81dca95a55f975b6e54fe6f311a71792e21698
-
 cargo build -p neard --release --features shardnet
+```
 
 #check the version
 
+```
 ~/nearcore/target/release/neard --version
+```
 
 #now you have to initialize the working directory, delete old files and download new config file and new genesis.json
 
+```
 ~/nearcore/target/release/neard --home ~/.near init --chain-id shardnet --download-genesis 
+```
 
+```
 rm ~/.near/config.json ~/.near/genesis.json
+```
 
+```
 wget -O ~/.near/config.json https://s3-us-west-1.amazonaws.com/build.nearprotocol.com/nearcore-deploy/shardnet/config.json 
-
 wget -O ~/.near/genesis.json https://s3-us-west-1.amazonaws.com/build.nearprotocol.com/nearcore-deploy/shardnet/genesis.json
+```
 
 #Run the node
 
+```
 cd ~/nearcore
-
 ./target/release/neard --home ~/.near run
+```
 
 ![image](https://user-images.githubusercontent.com/42779023/180088266-d6da46d1-1a73-4d27-822c-46ad5a892abe.png)
 
@@ -116,7 +125,9 @@ cd ~/nearcore
 
 #Authorize Wallet Locally
 
+```
 near login
+```
 
 ![image](https://user-images.githubusercontent.com/42779023/180089139-d3501b3c-a2af-45bb-a955-62ad964f590f.png)
 
@@ -141,9 +152,10 @@ near login
 
 #Copy your wallet json and make some changes
 
+```
 cd ~/.near-credentials/shardnet/
-
 cp <wallet.json> ~/.near/validator_key.json
+```
 
 #NOTE:<wallet.json> ---> is your wallet name file e.g in mine johnpaulnodes.shardnet.near.json
 
@@ -151,7 +163,9 @@ cp <wallet.json> ~/.near/validator_key.json
 
 #now do this
 
+```
 nano validator_key.json
+```
 
 #then paste the content here, then edit the account ID and Private Key parameter accordingly
 
@@ -161,57 +175,47 @@ nano validator_key.json
 
 #File content must be in the following pattern
 
+```
 {
 "account_id":"johnpaulnodes.factory.shardnet.near",
 "public_key":"ed25519:72wzgPZgDx2SgE7Nffd6xfXSe4RNv57JE2ZXZ8xGH",
 "secret_key":"ed25519:55Xbx9zd7pbjDjmmWhMav7ozmreJWyYyiKBVFboG8UjCegUQkxH8bwQkeEuJHxD"
 }
+```
 
 #then exit with CTRL+O press Enter, then CRTL+X 
 
 #Create a service file 
 
+```
 sudo tee /etc/systemd/system/neard.service > /dev/null <<EOF
-                                                             
 [Unit] 
-                                                             
 Description=NEARd Daemon Service 
-                                                             
 [Service] 
-                                                             
 Type=simple 
-                                                             
-User=$USER #Group=near 
-                                                             
+User=$USER
+#Group=near 
 WorkingDirectory=$HOME/.near 
-                                                             
-ExecStart=$HOME/nearcore/target/release/neard run 
-                                                             
+ExecStart=$HOME/nearcore/target/release/neard run     
 Restart=on-failure 
-                                                             
 RestartSec=30 
-                                                             
 KillSignal=SIGINT 
-                                                             
 TimeoutStopSec=45 
-                                                             
 KillMode=mixed 
-                                                             
 [Install] 
-                                                             
 WantedBy=multi-user.target 
-                                                             
 EOF
+```
+
 
 #start the service and see logs
-                                                             
+
+```
 sudo systemctl daemon-reload 
-                                                             
 sudo systemctl enable neard 
-                                                             
 sudo systemctl start neard
-                                                             
 journalctl -u neard -f
+```
 
 ![image](https://user-images.githubusercontent.com/42779023/180093925-a6573675-a9c0-4bdd-bffb-0fd1d6719451.png)
                                                              
@@ -220,24 +224,30 @@ journalctl -u neard -f
 #Challenge 003#
 
 #Mounting a staking pool
-                                                             
+  
+```                                                           
 near call factory.shardnet.near create_staking_pool '{"staking_pool_id": "<pool id>", "owner_id": "<accountId>", "stake_public_key": "<public key>", "reward_fee_fraction": {"numerator": 5, "denominator": 100}, "code_hash":"DD428g9eqLL8fWUxv8QSpVFzyHi1Qd16P8ephYCTmMSZ"}' --accountId="<accountId>" --amount=30 --gas=300000000000000
-                                                             
+ ```
+                                                            
 #NOTE: Change <pool id>, <accountId>, <public key>, <accountId> parameters e.g mine near call factory.shardnet.near create_staking_pool '{"staking_pool_id": "johnpaulnodes", "owner_id": "johnpaulnodes.shardnet.near", "stake_public_key": "ed25519:72wzgPZgDx2SXSe4ba7RNv57JE2ZXZ8xGH", "reward_fee_fraction": {"numerator": 5, "denominator": 100}, "code_hash":"DD428g9eqLL8fWUxv8QSpVFzyHi1Qd16P8ephYCTmMSZ"}' --accountId="johnpaulnodes.shardnet.near" --amount=30 --gas=300000000000000 
 
 #if its sucessful
   
 #check your pool by running 
-  
+ 
+``` 
 near proposals
-  
+```
+
 #your node should be here
   
 ![image](https://user-images.githubusercontent.com/42779023/180095051-f7583a3a-eeb7-4d7b-8ebf-f4c9e6df9dd1.png)
 
 #you can deposit and stake more depending on ur wallet balance
-  
+ 
+``` 
 near call johnpaulnodes.factory.shardnet.near  deposit_and_stake --amount 1200 --accountId johnpaulnodes.shardnet.near --gas=300000000000000
+```
   
 #NOTE: johnpaulnodes.factory.shardnet.near and johnpaulnodes.shardnet.near should be replace by yours
 
@@ -246,8 +256,10 @@ near call johnpaulnodes.factory.shardnet.near  deposit_and_stake --amount 1200 -
 #monitor your node and be a validator confirming transactions on testnet and get >95% of uptime.
   
 #Log Files, the command below will show you the log file
-  
+ 
+``` 
 journalctl -n 100 -f -u neard | ccze -A
+```
 
 ![image](https://user-images.githubusercontent.com/42779023/180096308-b91e92a9-d92c-47e3-8fe8-01c570e23978.png)
   
@@ -258,13 +270,16 @@ journalctl -n 100 -f -u neard | ccze -A
 #33 peers: You current have 33 peers. You need at least 3 peers to reach consensus and start validating
 
 #Check your node version
-  
+ 
+``` 
 curl -s http://127.0.0.1:3030/status | jq .version
-  
+ ``` 
 
 #NOTE:install jq if you dont have it
   
+```
 sudo apt install curl jq
+```
 
 #Challenge 006#
 
@@ -272,17 +287,23 @@ sudo apt install curl jq
   
   
 #Create a new crontab, running every 5 minutes
-  
+ 
+``` 
 crontab -e 
-  
+  ```
+
+```
 */5 * * * *  export NEAR_ENV=shardnet && near call johnpaulnodes.factory.shardnet.near ping '{}' --accountId johnpaulnodes.shardnet.near --gas=300000000000000
+```
 
   #NOTE: replace johnpaulnodes.factory.shardnet.near and johnpaulnodes.shardnet.near with yours
   
 #check crontab to see if it is running
-  
+ 
+``` 
 crontab -l
-  
+  ```
+
   #check wallet on web to see recent activity in interval of 5 minutes
   
   ![image](https://user-images.githubusercontent.com/42779023/180101376-d95dfe0d-9c86-445d-8580-ff39056d9a4e.png)
