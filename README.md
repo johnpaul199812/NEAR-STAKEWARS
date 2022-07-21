@@ -14,39 +14,55 @@ or you can use mobaxterm to ssh login, download mobaxterm here https://mobaxterm
 
 #make sure the linux machine is up-to-date
 
+```
 sudo apt update && sudo apt upgrade -y
+```
 
 #install Node JS and NPM
 
+```
 curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash - 
+```
 
 sudo apt install build-essential nodejs 
 
+```
 PATH="$PATH"
+```
 
 #install NEAR-CLI
 
+```
 npm install -g near-cli
+```
 
 #Set up the environment
 
+```
 echo 'export NEAR_ENV=shardnet' >> ~/.bashrc
+```
 
 #Challenge 002#
 
 #Install developer tools
 
+```
 sudo apt install -y git binutils-dev libcurl4-openssl-dev zlib1g-dev libdw-dev libiberty-dev cmake gcc g++ python docker.io protobuf-compiler libssl-dev pkg-config clang llvm cargo
+```
 
 #Install Python pip
 
+```
 sudo apt install python3-pip
+```
 
 #Set the configuration
 
+```
 USER_BASE_BIN=$(python3 -m site --user-base)/bin
 
 export PATH="$USER_BASE_BIN:$PATH"
+```
 
 #Install Building env
 
