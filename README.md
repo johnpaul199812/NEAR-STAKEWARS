@@ -55,6 +55,7 @@ sudo apt install clang build-essential make
 #Install cargo and rust
 
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
 source $HOME/.cargo/env
 
 #Now download and build binary
@@ -65,7 +66,7 @@ cd nearcore
 
 git fetch 
 
-git checkout 8448ad1ebf27731a43397686103aa5277e7f2fcf
+git checkout 0f81dca95a55f975b6e54fe6f311a71792e21698
 
 cargo build -p neard --release --features shardnet
 
@@ -150,7 +151,7 @@ nano validator_key.json
 "secret_key":"ed25519:55Xbx9zd7pbjDjmmWhMav7ozmreJWyYyiKBVFboG8UjCegUQkxH8bwQkeEuJHxD"
 }
 
-#then exit with CTRL+O press Enter, then CRTL+X press 
+#then exit with CTRL+O press Enter, then CRTL+X 
 
 #Create a service file 
 
