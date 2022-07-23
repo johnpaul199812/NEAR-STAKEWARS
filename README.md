@@ -185,6 +185,8 @@ nano validator_key.json
 }
 ```
 
+Secret here isn't real 🤣🤣🤣
+
 #then exit with CTRL+O press Enter, then CRTL+X 
 
 #Create a service file 
