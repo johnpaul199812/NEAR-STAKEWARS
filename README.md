@@ -18,6 +18,14 @@ or you can use mobaxterm to ssh login, download mobaxterm here https://mobaxterm
 sudo apt update && sudo apt upgrade -y
 ```
 
+#Before you start, you may want to confirm that your machine has the right CPU features.
+
+```
+lscpu | grep -P '(?=.*avx )(?=.*sse4.2 )(?=.*cx16 )(?=.*popcnt )' > /dev/null \
+  && echo "Supported" \
+  || echo "Not supported"
+  ```
+  
 #install Node JS and NPM
 
 ```
@@ -92,7 +100,7 @@ source $HOME/.cargo/env
 git clone https://github.com/near/nearcore 
 cd nearcore 
 git fetch 
-git checkout 0f81dca95a55f975b6e54fe6f311a71792e21698
+git checkout 24cbb11ce1e14aa267f787f011935a4465d3537d
 cargo build -p neard --release --features shardnet
 ```
 
