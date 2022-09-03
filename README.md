@@ -1,6 +1,8 @@
 # NEAR-STAKEWARS
 #How to set up a Shardnet Node for NEAR STAKEWARS
 
+video guide: https://youtu.be/fETzE8QWPPY
+
 #Get a vps server at digitalocean with this link https://m.do.co/c/3d3f5749db15, 100$ in free credits to buy server 
 ![image](https://user-images.githubusercontent.com/42779023/180081719-6e4b4627-a6db-4059-9aeb-686aa88e0931.png)
 
@@ -100,7 +102,7 @@ source $HOME/.cargo/env
 git clone https://github.com/near/nearcore 
 cd nearcore 
 git fetch 
-git checkout 24cbb11ce1e14aa267f787f011935a4465d3537d
+git checkout 1897d5144a7068e4c0d5764d8c9180563db2fe43
 cargo build -p neard --release --features shardnet
 ```
 
